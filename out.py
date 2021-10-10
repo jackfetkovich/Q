@@ -1,0 +1,5 @@
+print('hello world')
+print('Where are you from?')
+print('What is your name?')
+print('18')
+print('BOB')

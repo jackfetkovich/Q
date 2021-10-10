@@ -1,7 +1,9 @@
 import re
 import os
 from sys import argv
+from subprocess import call
 import Lexer
+import Parser
 
 file_path = argv[1]
 
@@ -16,8 +18,9 @@ if(not os.path.exists(file_path)):
   exit()
 
 l = Lexer.lexer()
+tokens = []
 
-with open(file_path) as src:
+with open(file_path, "r") as src:
   for line in src:
     line = line.strip()
     l.input(line)
@@ -25,4 +28,12 @@ with open(file_path) as src:
       tok = l.token()
       if not tok:
         break      # No more input
-      print(tok)
+      tokens.append(tok)
+
+parsed_str = Parser.parse(tokens)
+
+with open("./out.py", "w") as out:
+  for ch in parsed_str:
+    out.write(ch)
+
+call(["python3", "out.py"])
