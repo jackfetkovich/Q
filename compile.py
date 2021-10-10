@@ -15,7 +15,14 @@ if(not os.path.exists(file_path)):
   print(f"File '{file_path}' could not be located")
   exit()
 
+l = Lexer.lexer()
+
 with open(file_path) as src:
   for line in src:
     line = line.strip()
-    
+    l.input(line)
+    while True:
+      tok = l.token()
+      if not tok:
+        break      # No more input
+      print(tok)
